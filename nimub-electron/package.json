@@ -1,0 +1,51 @@
+{
+  "name": "nimub-electron",
+  "productName": "Nimbus",
+  "version": "1.0.0",
+  "description": "Nimbus desktop file workspace, built with Electron and Next.js",
+  "author": "fakelozic",
+  "license": "UNLICENSED",
+  "private": true,
+  "main": "electron/main.cjs",
+  "engines": { "node": ">=22.12.0" },
+  "scripts": {
+    "start": "npm run build && node scripts/launch.cjs",
+    "desktop": "node scripts/launch.cjs",
+    "dev:web": "next dev --hostname 127.0.0.1",
+    "build": "next build",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/protocol.test.cjs",
+    "test:desktop": "node scripts/launch.cjs --test",
+    "pack": "npm run build && electron-builder --dir --publish never",
+    "dist": "npm run build && electron-builder --publish never",
+    "dist:linux": "npm run build && electron-builder --linux --publish never",
+    "dist:win": "npm run build && electron-builder --win --publish never",
+    "dist:mac": "npm run build && electron-builder --mac --publish never"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "electron": "44.5.1",
+    "electron-builder": "26.15.3",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "16.3.8",
+    "next": "16.3.8",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "typescript": "^5.9.0"
+  },
+  "build": {
+    "appId": "com.fakelozic.nimbus",
+    "productName": "Nimbus",
+    "asar": true,
+    "directories": { "output": "release", "buildResources": "build" },
+    "files": ["electron/**/*", "out/**/*", "build/icon.png", "package.json"],
+    "artifactName": "Nimbus-${version}-${os}-${arch}.${ext}",
+    "linux": { "target": ["AppImage", "tar.gz"], "category": "Utility", "icon": "build/icon.png" },
+    "win": { "target": ["nsis"] },
+    "nsis": { "oneClick": false, "allowToChangeInstallationDirectory": true },
+    "mac": { "target": ["dmg"], "category": "public.app-category.productivity" }
+  }
+}
