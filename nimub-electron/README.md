@@ -25,6 +25,10 @@ npm run dist:mac
 
 The installers are written to `release/`. Linux builds produce an AppImage and tar.gz archive. Windows builds produce an NSIS installer; macOS builds produce a DMG. Build and test each target on its own operating system. Signing and macOS notarization require the owner's certificates and credentials; none are configured here. `npm run pack` creates an unpacked application for the current platform. No build command publishes releases.
 
+The Windows x64 installer is `release/Nimbus-1.0.0-win-x64.exe`. Copy it to Windows and run it to install Nimbus. This build is unsigned; Windows installation and app runtime remain unverified. Build evidence and the installer checksum are recorded in `VERIFICATION.md` and the local `artifacts/windows-verification.json`.
+
+Creating the Windows NSIS installer on Linux requires Wine. [Electron-builder's build guide](https://www.electron.build/v26/docs/features/multi-platform-build/) specifies `electronuserland/builder:wine`. The recorded Windows build used that container to finish packaging the prebuilt `release/win-unpacked` application.
+
 On Linux, run the AppImage after marking it executable. Systems without FUSE can use the tar.gz archive or the AppImage's `--appimage-extract-and-run` option. Run the app as a normal user; the app enables Electron's renderer sandbox.
 
 ## Verification
